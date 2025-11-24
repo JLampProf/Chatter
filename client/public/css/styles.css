@@ -1,0 +1,63 @@
+:root {
+  --background: #2a2438;
+  --primary: #dbd8e3;
+  --secondary: #5c5470;
+  --tertiary: #352f44;
+  --font-primary: "Lato", sans-serif;
+  --font-secondary: "Merriweather Sans", sans-serif;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--primary);
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-primary);
+}
+
+button {
+  font-family: var(--font-primary);
+  border-radius: 6px;
+  background-color: var(--secondary);
+  color: var(--primary);
+  padding: 8px;
+  width: 90px;
+}
+
+.nav-container {
+  display: flex;
+  background-color: var(--tertiary);
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.nav-container .nav-list {
+  display: flex;
+  list-style: none;
+}
+.nav-container .nav-list-item {
+  margin: 0 14px;
+  font-size: 1.4rem;
+  padding: 5px;
+  border-radius: 6px;
+}
+.nav-container .nav-interaction {
+  display: flex;
+  margin: 0 30px;
+}
+.nav-container .nav-interaction .nav-search {
+  margin: 0 20px;
+}
+.nav-container .nav-interaction .nav-search-bar {
+  height: 24px;
+  border-radius: 6px;
+  margin: 0 15px;
+  width: 200px;
+}
+.nav-container .nav-interaction .nav-search-button {
+  height: 35px;
+  width: 70px;
+}
+.nav-container .nav-interaction .nav-button {
+  margin: 0 5px;
+}/*# sourceMappingURL=styles.css.map */
