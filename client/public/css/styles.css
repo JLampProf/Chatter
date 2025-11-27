@@ -101,4 +101,34 @@ button {
 .main-page-right {
   height: 400px;
   width: 400px;
+}
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px auto;
+  padding: 10px;
+  width: 20%;
+  box-shadow: var(--box-outer);
+  border: 1px solid var(--secondary);
+  border-radius: 7px;
+}
+.login-page .login-form {
+  display: flex;
+  flex-direction: column;
+}
+.login-page .login-form label {
+  font-size: 1.1rem;
+}
+.login-page .login-form .login-pass-label {
+  margin-top: 15px;
+}
+.login-page .login-form input {
+  border-radius: 6px;
+  height: 30px;
+  width: 250px;
+}
+.login-page .login-form button {
+  margin: 25px 20px;
 }/*# sourceMappingURL=styles.css.map */

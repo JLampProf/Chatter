@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   //TODO: Privacy Policy flashes at startup
   const [selected, setSelected] = useState(1);
+  const navigate = useNavigate();
 
   return (
     <nav className="nav-container">
@@ -33,15 +35,17 @@ const Navbar = () => {
         </li>
       </ul>
       <div className="nav-interaction">
-        <form className="nav-search" role="search">
+        {/* <form className="nav-search" role="search">
           <input className="nav-search-bar" type="text" />
           <button className="nav-search-button" type="submit">
             Search
           </button>
-        </form>
+        </form> */}
         <section className="nav-auth-buttons">
           <button className="nav-button">Register</button>
-          <button className="nav-button">Login</button>
+          <button onClick={() => navigate("/login")} className="nav-button">
+            Login
+          </button>
         </section>
       </div>
     </nav>

@@ -116,3 +116,38 @@ button {
     width: 400px;
   }
 }
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px auto;
+  padding: 10px;
+  width: 20%;
+  box-shadow: var(--box-outer);
+  border: 1px solid var(--secondary);
+  border-radius: 7px;
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-size: 1.1rem;
+    }
+
+    .login-pass-label {
+      margin-top: 15px;
+    }
+
+    input {
+      border-radius: 6px;
+      height: 30px;
+      width: 250px;
+    }
+
+    button {
+      margin: 25px 15px;
+    }
+  }
+}
