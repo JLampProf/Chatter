@@ -10,6 +10,7 @@ import { verifyToken } from "./controllers/authController.js";
 
 //route imports
 import { loginRouter } from "./routes/api/login.js";
+import { registerRouter } from "./routes/api/register.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 
 //routes
 app.use("/login", loginRouter);
+app.use("/register", registerRouter);
 
 app.listen(PORT, () => {
   console.log(`Server listening on Port ${PORT}`);

@@ -5,8 +5,7 @@
  * - If successful, it returns the data to the component.
  */
 
-import axios, { HttpStatusCode } from "axios";
-
+import axios from "axios";
 const { VITE_BACK_URL } = import.meta.env;
 
 /**
@@ -28,7 +27,9 @@ export const handleLogin = async (userLoginData) => {
 
     return userDBData.data;
   } catch (error) {
-    if (error?.response?.status === 401) {
+    if (error?.response?.status === 400) {
+      return 400;
+    } else if (error?.response?.status === 401) {
       return 401;
     }
     throw new Error("Server Connection Failed");

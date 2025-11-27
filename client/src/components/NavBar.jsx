@@ -42,7 +42,9 @@ const Navbar = () => {
           </button>
         </form> */}
         <section className="nav-auth-buttons">
-          <button className="nav-button">Register</button>
+          <button onClick={() => navigate("/register")} className="nav-button">
+            Register
+          </button>
           <button onClick={() => navigate("/login")} className="nav-button">
             Login
           </button>

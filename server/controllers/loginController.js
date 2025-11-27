@@ -7,9 +7,15 @@ export const loginHandler = async (req, res) => {
   const { userLoginData } = req.body;
   const { user, pwd } = userLoginData;
 
+  if (!user || !pwd) {
+    return res.sendStatus(400);
+  }
+
+  const trimmedUser = user.trim();
+
   try {
     const [rows] = await pool.query("SELECT * FROM users WHERE username = ?", [
-      user,
+      trimmedUser,
     ]);
 
     if (rows.length <= 0) {
@@ -37,6 +43,6 @@ export const loginHandler = async (req, res) => {
       accessToken: tokens.authToken,
     });
   } catch (error) {
-    throw new Error("Database error");
+    return res.sendStatus(500);
   }
 };
