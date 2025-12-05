@@ -21,11 +21,15 @@ const Register = () => {
 
     try {
       const response = await registerSubmit(userLoginData);
-      if (response === 409) {
-        toastMessage("Username already taken!");
-        return;
-      } else if (response === 400) {
-        toastMessage("Username and Password are required.");
+      if (response?.error) {
+        switch (response.status) {
+          case 400:
+            toastMessage("Username and Password are required.");
+            break;
+          case 409:
+            toastMessage("Username already taken!");
+            break;
+        }
         return;
       }
 

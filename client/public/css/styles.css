@@ -10,6 +10,12 @@
   --box-inner: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   background-color: var(--background);
   color: var(--primary);
@@ -57,19 +63,6 @@ button {
 .nav-container .nav-interaction {
   display: flex;
   margin: 0 30px;
-}
-.nav-container .nav-interaction .nav-search {
-  margin: 0 30px;
-}
-.nav-container .nav-interaction .nav-search-bar {
-  height: 24px;
-  border-radius: 6px;
-  margin: 0 15px;
-  width: 200px;
-}
-.nav-container .nav-interaction .nav-search-button {
-  height: 35px;
-  width: 70px;
 }
 .nav-container .nav-interaction .nav-button {
   margin: 0 5px;
@@ -130,5 +123,206 @@ button {
   width: 250px;
 }
 .login-page .login-form button {
-  margin: 25px 20px;
+  margin: 25px 15px;
+}
+
+.home-page {
+  display: flex;
+  height: 100vh;
+}
+.home-page .friend-panel {
+  width: 14%;
+  background-color: var(--tertiary);
+  font-family: var(--font-secondary);
+  font-size: smaller;
+  display: flex;
+  flex-direction: column;
+}
+.home-page .friend-panel-header {
+  background-color: var(--background);
+  padding: 10px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+}
+.home-page .friend-panel-header-notifications {
+  height: 40px;
+  width: 40px;
+  border-radius: 4px;
+  background-color: var(--tertiary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.7rem;
+  box-shadow: var(--box-outer);
+}
+.home-page .friend-panel-header-notifications-status {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: red;
+}
+.home-page .friend-panel-list {
+  overflow: scroll;
+  scrollbar-width: none;
+  padding: 5px;
+  margin: 0;
+  flex: 1;
+}
+.home-page .friend-panel .settings-bar {
+  height: 60px;
+  padding: 10px;
+  background-color: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid black;
+}
+.home-page .friend-panel .settings-bar-icon {
+  height: 35px;
+  width: 35px;
+  background-color: var(--secondary);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home-page .friend-panel .settings-bar-icon div {
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  background-color: var(--background);
+}
+.home-page .main-sect {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.home-page .main-sect .welcome-nav {
+  height: 60px;
+  background-color: var(--tertiary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid black;
+}
+.home-page .main-sect .welcome-nav-separation {
+  display: flex;
+  align-items: center;
+}
+.home-page .main-sect .welcome-nav-separation-search {
+  margin: 0 30px;
+}
+.home-page .main-sect .welcome-nav-separation-search-bar {
+  height: 30px;
+  border-radius: 6px;
+  margin: 0 15px;
+  width: 200px;
+}
+.home-page .main-sect .welcome-nav-separation-search-button {
+  height: 35px;
+  width: 70px;
+}
+.home-page .main-sect .chat-window {
+  flex: 1;
+  z-index: 0;
+  box-shadow: var(--box-inner);
+}
+.home-page .main-sect .chat-bar {
+  height: 60px;
+  background-color: var(--secondary);
+  justify-self: flex-end;
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+}
+.home-page .main-sect .chat-bar-form {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+}
+.home-page .main-sect .chat-bar input {
+  border-radius: 25px;
+  width: 90%;
+}
+
+.friend-panel-header-notifications:hover {
+  box-shadow: 0px 0px 5px 3px rgba(255, 255, 255, 0.4);
+}
+
+.loading-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+.loading-icon .loading-bar {
+  width: 100px;
+  height: 100px;
+  background-color: var(--tertiary);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+}
+.loading-icon .loading-bar-inner {
+  width: 50px;
+  height: 50px;
+  background-color: var(--secondary);
+  border-radius: 50%;
+  animation: spin 2s infinite linear;
+  transform-origin: 50% 100%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.friend-item {
+  width: 100%;
+  display: flex;
+  list-style: none;
+  align-items: center;
+  font-family: var(--font-secondary);
+}
+.friend-item-image {
+  height: 40px;
+  width: 40px;
+  background-color: var(--secondary);
+  border-radius: 50%;
+  margin: 5px;
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.friend-item:hover {
+  background-color: var(--secondary);
+  border-radius: 6px;
+}
+.friend-item:hover .friend-item-image {
+  background-color: var(--tertiary);
+}
+
+.searched {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 20px;
+  margin: 10px;
+  width: 400px;
+  background-color: var(--tertiary);
+  border-radius: 3px;
+}
+.searched button {
+  width: 120px;
 }/*# sourceMappingURL=styles.css.map */

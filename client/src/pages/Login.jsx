@@ -6,17 +6,19 @@
  * - Moves the user to the main application page.
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { handleLogin } from "../scripts/loginScript.js";
 import { useGlobalAuth } from "../context/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { toastMessage } from "../scripts/toastScript.js";
+import { socket } from "../scripts/socket.js";
 
 const Login = () => {
   const [userLoginData, setUserLoginData] = useState({ user: "", pwd: "" });
   const [hintShown, setHintShown] = useState(false);
-  const { setUser, setAuthToken, setIsLoggedIn } = useGlobalAuth();
+  const { setUser, setAuthToken, setIsLoggedIn, setFriendList } =
+    useGlobalAuth();
   const navigate = useNavigate();
 
   /**
@@ -37,20 +39,34 @@ const Login = () => {
     e.preventDefault(); //Prevents page reload on form submission
     try {
       const response = await handleLogin(userLoginData);
-      if (response === 400) {
-        toastMessage("Username or Password missing");
-        return;
-      } else if (response === 401) {
-        toastMessage("Username or Password incorrect. Please try again");
+
+      if (response?.error) {
+        switch (response.status) {
+          case 400:
+            toastMessage("Username or Password missing");
+            break;
+          case 401:
+            toastMessage("Username or Password incorrect. Please try again");
+            break;
+          case 500:
+            toastMessage("Server temporarily unavailable. Please try again!");
+            break;
+        }
         return;
       }
+
       setUser({
         username: response.userData.username,
         user_id: response.userData.user_id,
+        roomId: response.userData.room_id,
       });
+      console.log("friendListRooms:", response.friendList);
+      setFriendList(response.friendList);
       setAuthToken(response.accessToken);
       setUserLoginData({ user: "", pwd: "" });
       setIsLoggedIn(true);
+      socket.connect();
+      socket.emit("joinRoom", response.userData.room_id);
       navigate("/");
     } catch (error) {
       console.log(error);

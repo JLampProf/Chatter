@@ -22,11 +22,12 @@ export const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
+  credentials: true,
 };
 
 export const cookieObject = {
   httpOnly: true,
-  secure: false,
-  sameSite: "none",
+  // secure: false,
+  // sameSite: "none",
   maxAge: 3 * 24 * 60 * 60 * 1000,
 };

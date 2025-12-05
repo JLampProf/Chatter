@@ -21,16 +21,20 @@ const { VITE_BACK_URL } = import.meta.env;
 
 export const handleLogin = async (userLoginData) => {
   try {
-    const userDBData = await axios.post(`${VITE_BACK_URL}/login`, {
+    const userDBData = await axios.post(`${VITE_BACK_URL}/api/login`, {
       userLoginData,
+    }, {
+      withCredentials: true,
     });
 
     return userDBData.data;
   } catch (error) {
     if (error?.response?.status === 400) {
-      return 400;
+      return { error: true, status: 400 };
     } else if (error?.response?.status === 401) {
-      return 401;
+      return { error: true, status: 401 };
+    } else if (error?.response?.status === 500) {
+      return { error: true, status: 500 };
     }
     throw new Error("Server Connection Failed");
   }

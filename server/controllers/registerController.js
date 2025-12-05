@@ -1,10 +1,15 @@
 import { loginHandler } from "./loginController.js";
 import bcrypt from "bcrypt";
 import { pool } from "./databaseController.js";
+import { nanoid } from "nanoid";
 
 export const registerHandler = async (req, res) => {
   const { userLoginData } = req.body;
   const { user, pwd } = userLoginData;
+
+  const newId = nanoid(5);
+
+  console.log(newId);
 
   if (!user || !pwd) {
     return res.sendStatus(400);
@@ -23,10 +28,10 @@ export const registerHandler = async (req, res) => {
 
     const hashedPwd = await bcrypt.hash(pwd, 10);
 
-    await pool.query("INSERT INTO users (username, password) VALUES (?, ?)", [
-      trimmedUser,
-      hashedPwd,
-    ]);
+    await pool.query(
+      "INSERT INTO users (username, password, room_id) VALUES (?, ?, ?)",
+      [trimmedUser, hashedPwd, newId]
+    );
 
     await loginHandler(req, res);
   } catch (error) {

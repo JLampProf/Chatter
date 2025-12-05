@@ -35,12 +35,6 @@ const Navbar = () => {
         </li>
       </ul>
       <div className="nav-interaction">
-        {/* <form className="nav-search" role="search">
-          <input className="nav-search-bar" type="text" />
-          <button className="nav-search-button" type="submit">
-            Search
-          </button>
-        </form> */}
         <section className="nav-auth-buttons">
           <button onClick={() => navigate("/register")} className="nav-button">
             Register
