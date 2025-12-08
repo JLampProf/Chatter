@@ -5,12 +5,24 @@ import { searchFriend } from "../../scripts/friendScript.js";
 import { toastMessage } from "../../scripts/toastScript.js";
 import { socket } from "../../scripts/socket.js";
 import { useEffect } from "react";
+import { handleLogout } from "../../scripts/logoutScript.js";
 
 const WelcomeBar = () => {
-  const { user, setUser, authToken, setAuthToken, setIsLoggedIn } =
-    useGlobalAuth();
-  const { searchValue, setSearchValue, setSearchedUser, setIsSearching } =
-    useGlobalState();
+  const {
+    user,
+    setUser,
+    authToken,
+    setAuthToken,
+    setIsLoggedIn,
+    setFriendList,
+  } = useGlobalAuth();
+  const {
+    searchValue,
+    setSearchValue,
+    setSearchedUser,
+    setIsSearching,
+    setIsLoaded,
+  } = useGlobalState();
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -23,6 +35,10 @@ const WelcomeBar = () => {
       switch (friend.status) {
         case 404:
           toastMessage("User not Found, did you type it correctly?");
+          break;
+        case 400:
+          toastMessage("Unexpected Error, please logout and log back in.");
+          break;
       }
       return;
     }
@@ -31,11 +47,16 @@ const WelcomeBar = () => {
     setSearchValue("");
   };
 
-  const logout = () => {
+  const logout = async () => {
     setUser({});
-    setAuthToken("");
     setIsLoggedIn(false);
+    setFriendList([]);
     socket.disconnect();
+    setIsLoaded(false);
+    try {
+      await handleLogout(authToken);
+    } catch (error) {}
+    setAuthToken("");
   };
 
   useEffect(() => {

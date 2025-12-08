@@ -16,6 +16,7 @@ import { loginRouter } from "./routes/api/login.js";
 import { registerRouter } from "./routes/api/register.js";
 import { refreshRouter } from "./routes/api/refresh.js";
 import { friendsRouter } from "./routes/api/friends.js";
+import { logoutRouter } from "./routes/api/logout.js";
 
 const app = express();
 const server = createServer(app);
@@ -38,6 +39,7 @@ app.use("/api/login", loginRouter);
 app.use("/api/register", registerRouter);
 app.use("/api/refresh", refreshRouter);
 app.use("/api/friends", verifyToken, friendsRouter);
+app.use("/api/logout", verifyToken, logoutRouter);
 
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);

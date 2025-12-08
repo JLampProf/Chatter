@@ -9,10 +9,12 @@ export const refreshToken = async (req, res) => {
   const cookieToken = req?.cookies?.jwt;
   const sessionCookie = req?.cookies?.session;
 
+  const decoded = jwt.verify(cookieToken, REFRESH_TOKEN_SECRET);
+
   try {
     const [refreshTokenDb] = await pool.query(
-      "SELECT refresh_token FROM sessions WHERE session_id = ? AND valid = ?",
-      [sessionCookie, true]
+      "SELECT refresh_token FROM sessions WHERE session_id = ? AND valid = ? AND user_id = ?",
+      [sessionCookie, true, decoded.userId]
     );
 
     if (refreshTokenDb.length === 0) {
@@ -27,7 +29,6 @@ export const refreshToken = async (req, res) => {
       .digest("hex");
 
     if (cookieTokenHash === refreshToken) {
-      const decoded = jwt.verify(cookieToken, REFRESH_TOKEN_SECRET);
       const payload = {
         username: decoded.username,
         userId: decoded.userId,

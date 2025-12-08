@@ -5,12 +5,14 @@ import { socket } from "../../scripts/socket.js";
 import { fetchRoomId } from "../../scripts/friendScript.js";
 
 const SearchWindow = () => {
-  const { searchedUser } = useGlobalState();
+  const { searchedUser, setIsSearching, setSearchedUser } = useGlobalState();
   const { authToken, user } = useGlobalAuth();
 
   const handleAdd = async () => {
     const userRoomId = await fetchRoomId(searchedUser.userID, authToken);
     socket.emit("sendFriendRequest", { roomId: userRoomId });
+    setIsSearching(false);
+    setSearchedUser({});
   };
 
   return (
