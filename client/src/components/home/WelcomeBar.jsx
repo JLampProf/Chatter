@@ -1,7 +1,6 @@
-import { ToastContainer } from "react-toastify";
 import { useGlobalAuth } from "../../context/AuthContext.jsx";
 import { useGlobalState } from "../../context/StateContext.jsx";
-import { searchFriend } from "../../scripts/friendScript.js";
+import { searchFriend } from "../../scripts/searchScript.js";
 import { toastMessage } from "../../scripts/toastScript.js";
 import { socket } from "../../scripts/socket.js";
 import { useEffect } from "react";
@@ -22,6 +21,14 @@ const WelcomeBar = () => {
     setSearchedUser,
     setIsSearching,
     setIsLoaded,
+    setAlreadyFriends,
+    setIsFriendOpen,
+    setIsMessageOpen,
+    setNotificationStatus,
+    setFriendRequestList,
+    setNewMessageList,
+    setHasFriendRequests,
+    setHasNewMessages,
   } = useGlobalState();
 
   const handleSearch = async (e) => {
@@ -30,14 +37,20 @@ const WelcomeBar = () => {
       toastMessage("Field cannot be empty.");
       return;
     }
-    const friend = await searchFriend(searchValue, authToken);
+    const friend = await searchFriend(user.user_id, searchValue, authToken);
+    if (friend.alreadyFriends === true) {
+      setAlreadyFriends(true);
+    } else {
+      setAlreadyFriends(false);
+    }
     if (friend?.error) {
       switch (friend.status) {
         case 404:
           toastMessage("User not Found, did you type it correctly?");
           break;
         case 400:
-          toastMessage("Unexpected Error, please logout and log back in.");
+          toastMessage("Could not complete request");
+          logout();
           break;
       }
       return;
@@ -50,12 +63,25 @@ const WelcomeBar = () => {
   const logout = async () => {
     setUser({});
     setIsLoggedIn(false);
+    setIsSearching(false);
     setFriendList([]);
     socket.disconnect();
     setIsLoaded(false);
+    setSearchedUser({});
+    setAlreadyFriends(false);
+    setIsFriendOpen(false);
+    setIsMessageOpen(false);
+    setNotificationStatus(false);
+    setSearchValue("");
+    setFriendRequestList([]);
+    setNewMessageList([]);
+    setHasFriendRequests(false);
+    setHasNewMessages(false);
     try {
       await handleLogout(authToken);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
     setAuthToken("");
   };
 
@@ -72,7 +98,6 @@ const WelcomeBar = () => {
   return (
     <section className="welcome-nav">
       <h1>Welcome {user.username}</h1>
-      <ToastContainer className="toaster" autoClose={2000} />
       <div className="welcome-nav-separation">
         <form
           onSubmit={handleSearch}

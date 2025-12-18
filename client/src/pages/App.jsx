@@ -6,6 +6,8 @@ import { useGlobalAuth } from "../context/AuthContext.jsx";
 import Home from "./Home.jsx";
 import { useEffect } from "react";
 import { socket } from "../scripts/socket.js";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const { isLoggedIn } = useGlobalAuth();
@@ -22,6 +24,7 @@ const App = () => {
 
   return (
     <>
+      <ToastContainer className="toaster" autoClose={2000} />
       {isLoggedIn ? (
         <Home />
       ) : (

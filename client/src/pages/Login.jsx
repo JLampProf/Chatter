@@ -6,9 +6,10 @@
  * - Moves the user to the main application page.
  */
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { handleLogin } from "../scripts/loginScript.js";
 import { useGlobalAuth } from "../context/AuthContext.jsx";
+import { useGlobalState } from "../context/StateContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { toastMessage } from "../scripts/toastScript.js";
@@ -20,6 +21,7 @@ const Login = () => {
   const { setUser, setAuthToken, setIsLoggedIn, setFriendList } =
     useGlobalAuth();
   const navigate = useNavigate();
+  const { setFriendRequestList, setNewMessageList } = useGlobalState();
 
   /**
    * - handleSubmit(e)
@@ -60,7 +62,6 @@ const Login = () => {
         user_id: response.userData.user_id,
         roomId: response.userData.room_id,
       });
-      console.log("friendListRooms:", response.friendList);
       setFriendList(response.friendList);
       setAuthToken(response.accessToken);
       setUserLoginData({ user: "", pwd: "" });
@@ -69,7 +70,6 @@ const Login = () => {
       socket.emit("joinRoom", response.userData.room_id);
       navigate("/");
     } catch (error) {
-      console.log(error);
       toastMessage("Unexpected error, please try again");
     }
   };

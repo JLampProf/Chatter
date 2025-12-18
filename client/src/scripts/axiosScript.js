@@ -10,10 +10,10 @@ export const intercept = axios.create({
 intercept.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.config._retry) return Promise.reject(error);
-    if (error?.response?.status === HttpStatusCode.Forbidden) {
+    if (error?.config?._retry) return Promise.reject(error);
+    if (error.response.status === HttpStatusCode.Forbidden) {
       try {
-        const newToken = await axios.get(`${BACK_URL}/api/refresh`, {
+        const newToken = await axios.post(`${BACK_URL}/api/refresh`, {
           withCredentials: true,
         });
         const accessToken = newToken.data.accessToken;
@@ -22,6 +22,7 @@ intercept.interceptors.response.use(
         return intercept(error.config);
       } catch (error) {
         if (error?.response?.status === 400) {
+          //At this point, alert user of fraudulent activity through email (Not going to be a feature)
           return { error: true, status: 400 }; //TODO: Revisit
         }
         console.log("Unable to refresh", error);

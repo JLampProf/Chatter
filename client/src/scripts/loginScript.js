@@ -21,11 +21,15 @@ const { VITE_BACK_URL } = import.meta.env;
 
 export const handleLogin = async (userLoginData) => {
   try {
-    const userDBData = await axios.post(`${VITE_BACK_URL}/api/login`, {
-      userLoginData,
-    }, {
-      withCredentials: true,
-    });
+    const userDBData = await axios.post(
+      `${VITE_BACK_URL}/api/login`,
+      {
+        userLoginData,
+      },
+      {
+        withCredentials: true,
+      }
+    );
 
     return userDBData.data;
   } catch (error) {

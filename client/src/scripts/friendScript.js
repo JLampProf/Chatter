@@ -1,39 +1,31 @@
-import axios from "axios";
 import { intercept } from "./axiosScript.js";
 
-const BACK_URL = import.meta.env.VITE_BACK_URL;
-
-export const searchFriend = async (searchValue, authToken) => {
+export const sendFriendRequest = async (
+  currentUser,
+  searchedUser,
+  room_id,
+  accessToken
+) => {
   try {
-    const searchedFriend = await intercept.get(`${BACK_URL}/api/friends`, {
-      headers: { authorization: `BEARER ${authToken}` },
-      params: { name: searchValue },
-      withCredentials: true,
-    });
-
-    return searchedFriend.data;
-  } catch (error) {
-    if (error?.status === 404) {
-      return { error: true, status: 404 };
-    }
-    throw new Error("Server Error");
-  }
-};
-
-export const fetchRoomId = async (searchedUser, authToken) => {
-  try {
-    const roomId = await intercept.get(
-      `${BACK_URL}/api/friends/${searchedUser}`,
+    await intercept.post(
+      "api/friends",
       {
-        headers: { Authorization: `BEARER ${authToken}` },
-        withCredentials: true,
-      }
+        data: {
+          fromUserData: currentUser,
+          toUserData: searchedUser,
+          fromUserDataRoomId: room_id,
+        },
+      },
+      { headers: { Authorization: `Bearer ${accessToken}` } }
     );
 
-    return roomId.data.roomId;
+    return;
   } catch (error) {
-    if (error?.status) {
-      return { error: true, status: 400 };
+    console.log("friendScriptSaveFriend:", error);
+    if (error?.response) {
+      if (error?.response?.status === 500) {
+        return { error: true, status: 500 };
+      }
     }
   }
 };

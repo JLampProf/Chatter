@@ -4,11 +4,13 @@ import { toastMessage } from "../scripts/toastScript.js";
 import { registerSubmit } from "../scripts/registerScript.js";
 import { useNavigate } from "react-router-dom";
 import { useGlobalAuth } from "../context/AuthContext.jsx";
+import { socket } from "../scripts/socket.js";
 
 const Register = () => {
   const [userLoginData, setUserLoginData] = useState({ user: "", pwd: "" });
   const [hintShown, setHintShown] = useState(false);
-  const { setUser, setAuthToken, setIsLoggedIn } = useGlobalAuth();
+  const { setUser, setAuthToken, setIsLoggedIn, setFriendList } =
+    useGlobalAuth();
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -36,10 +38,14 @@ const Register = () => {
       setUser({
         username: response.userData.username,
         user_id: response.userData.user_id,
+        roomId: response.userData.room_id,
       });
+      setFriendList(response.friendList);
       setAuthToken(response.accessToken);
       setUserLoginData({ user: "", pwd: "" });
       setIsLoggedIn(true);
+      socket.connect();
+      socket.emit("joinRoom", response.userData.room_id);
       navigate("/");
     } catch (error) {
       toastMessage("An unexpected error occurred, please try again.");

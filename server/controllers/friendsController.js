@@ -1,42 +1,16 @@
 import { pool } from "../controllers/databaseController.js";
 
-export const searchUser = async (req, res) => {
-  const friendName = req.query.name;
-
+export const saveFriendRequest = async (req, res) => {
+  const { fromUserData, toUserData, fromUserDataRoomId } = req.body?.data;
   try {
-    const [foundUser] = await pool.query(
-      "SELECT username, user_id FROM users WHERE username = ?",
-      [friendName]
+    await pool.query(
+      "INSERT INTO notifications (notification_type, content, to_user_id, from_user_id) VALUES (?, ?, ?, ?)",
+      ["friend_request", fromUserDataRoomId, toUserData, fromUserData]
     );
 
-    if (foundUser.length === 0) {
-      console.log("Here");
-      res.sendStatus(404);
-    }
-
-    res
-      .status(200)
-      .json({ username: foundUser[0].username, userID: foundUser[0].user_id });
+    res.sendStatus(200);
   } catch (error) {
-    throw new Error("Database Error");
-  }
-};
-
-export const searchFriendRoom = async (req, res) => {
-  const friendId = req.params.id;
-
-  try {
-    const [userRoomId] = await pool.query(
-      "SELECT room_id FROM users WHERE user_id = ?",
-      [friendId]
-    );
-
-    if (userRoomId.length === 0) {
-      return res.sendStatus(400);
-    }
-
-    res.status(200).json({ roomId: userRoomId[0].room_id });
-  } catch (error) {
-    throw new Error("Database Error");
+    console.log("saveFriendError:", error);
+    res.sendStatus(500);
   }
 };

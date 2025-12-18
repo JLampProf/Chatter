@@ -9,8 +9,6 @@ export const registerHandler = async (req, res) => {
 
   const newId = nanoid(5);
 
-  console.log(newId);
-
   if (!user || !pwd) {
     return res.sendStatus(400);
   }

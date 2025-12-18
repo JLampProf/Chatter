@@ -15,8 +15,11 @@ import { verifyToken } from "./controllers/authController.js";
 import { loginRouter } from "./routes/api/login.js";
 import { registerRouter } from "./routes/api/register.js";
 import { refreshRouter } from "./routes/api/refresh.js";
+import { searchRouter } from "./routes/api/search.js";
 import { friendsRouter } from "./routes/api/friends.js";
+import { friendRequestRouter } from "./routes/api/friendRequest.js";
 import { logoutRouter } from "./routes/api/logout.js";
+import { notificationRouter } from "./routes/api/notifications.js";
 
 const app = express();
 const server = createServer(app);
@@ -38,19 +41,30 @@ app.use(express.json());
 app.use("/api/login", loginRouter);
 app.use("/api/register", registerRouter);
 app.use("/api/refresh", refreshRouter);
+app.use("/api/search", verifyToken, searchRouter);
 app.use("/api/friends", verifyToken, friendsRouter);
+app.use("/api/friendRequest", verifyToken, friendRequestRouter);
+app.use("/api/notifications", verifyToken, notificationRouter);
 app.use("/api/logout", verifyToken, logoutRouter);
 
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
   socket.on("joinRoom", (roomId) => {
     socket.join(roomId);
+    console.log(`${roomId} joined the room`);
   });
 
   socket.on("sendFriendRequest", ({ roomId }) => {
     io.to(roomId).emit(
       "receiveFriendRequest",
-      "A friend request was received!"
+      "A new friend request was received!"
+    );
+  });
+
+  socket.on("acceptFriendRequest", ({ content }) => {
+    io.to(content).emit(
+      "acceptedFriendRequest",
+      "Friend request was accepted! Say Hi, to your new friend!"
     );
   });
 
