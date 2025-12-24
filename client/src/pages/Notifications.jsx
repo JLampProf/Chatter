@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import FriendRequestNotificationItem from "../components/home/FriendRequestNotificationItem.jsx";
 import NewMessageNotificationItem from "../components/home/NewMessageNotificationItem.jsx";
 import { useGlobalState } from "../context/StateContext.jsx";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 
 const Notifications = () => {
   const [isFriendOpen, setIsFriendOpen] = useState(false);
@@ -28,7 +28,7 @@ const Notifications = () => {
     <section className="notifications-main">
       <div className="notifications-bar">
         <h1>Notifications</h1>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <FaXmark
           onClick={() => {
             setShowNotifications(false);

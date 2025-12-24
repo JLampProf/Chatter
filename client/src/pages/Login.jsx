@@ -66,6 +66,7 @@ const Login = () => {
       setIsLoggedIn(true);
       socket.connect();
       socket.emit("joinRoom", response.userData.room_id);
+      console.log("Joined room:", response.userData.room_id);
       navigate("/");
     } catch (error) {
       toastMessage("Unexpected error, please try again");

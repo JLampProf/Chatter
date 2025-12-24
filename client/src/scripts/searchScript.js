@@ -18,7 +18,6 @@ export const searchFriend = async (currentUser, searchValue, authToken) => {
 };
 
 export const fetchRoomId = async (searchedUser, authToken) => {
-  console.log("FetchRoomId:", authToken);
   try {
     const roomId = await intercept.get(`/api/search/${searchedUser}`, {
       headers: { Authorization: `Bearer ${authToken}` },

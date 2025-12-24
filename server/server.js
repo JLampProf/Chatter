@@ -54,6 +54,7 @@ app.use("/api/logout", verifyToken, logoutRouter);
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
   socket.on("joinRoom", (roomId) => {
+    console.log("Joining room:", roomId);
     socket.join(roomId);
   });
 

@@ -19,7 +19,10 @@ const ChatWindow = () => {
     const receiveMessage = ({ messageObject }) => {
       console.log("msg:", messageObject);
       // Only add message to cache if it belongs to the current chat
-      if (messageObject.roomId === currentChat?.room_id) {
+      if (
+        messageObject.sender_id === currentChat?.friendId ||
+        messageObject.receiverId === currentChat?.friendId
+      ) {
         setChatHistoryCache((prev) => {
           const next = new Map(prev);
           const prevMessages = next.get(currentChat?.friendId) ?? [];

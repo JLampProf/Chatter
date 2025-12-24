@@ -29,7 +29,7 @@ const FriendPanel = () => {
   const navigate = useNavigate();
 
   const handleNotificationScreen = () => {
-    setShowNotifications(true);
+    setShowNotifications((prev) => !prev);
   };
 
   const loadNotifications = async () => {
