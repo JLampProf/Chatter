@@ -3,7 +3,7 @@ import { intercept } from "./axiosScript.js";
 export const searchFriend = async (currentUser, searchValue, authToken) => {
   try {
     const searchedFriend = await intercept.get(`/api/search`, {
-      headers: { authorization: `BEARER ${authToken}` },
+      headers: { authorization: `Bearer ${authToken}` },
       params: { name: searchValue, currentUser },
       withCredentials: true,
     });
@@ -18,9 +18,10 @@ export const searchFriend = async (currentUser, searchValue, authToken) => {
 };
 
 export const fetchRoomId = async (searchedUser, authToken) => {
+  console.log("FetchRoomId:", authToken);
   try {
     const roomId = await intercept.get(`/api/search/${searchedUser}`, {
-      headers: { Authorization: `BEARER ${authToken}` },
+      headers: { Authorization: `Bearer ${authToken}` },
       withCredentials: true,
     });
 

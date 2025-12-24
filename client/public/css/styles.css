@@ -235,6 +235,40 @@ button {
   flex: 1;
   z-index: 0;
   box-shadow: var(--box-inner);
+  background-color: var(--tertiary);
+  margin: 10px;
+  border-radius: 6px;
+  overflow: scroll;
+  scrollbar-width: none;
+}
+.home-page .main-sect .chat-window ul {
+  padding: 0;
+}
+.home-page .main-sect .chat-window .message-bubble {
+  border-radius: 8px;
+  margin: 20px;
+  padding: 1px;
+  background-color: var(--background);
+  list-style: none;
+  font-family: var(--font-secondary);
+}
+.home-page .main-sect .chat-window .message-bubble-header {
+  display: flex;
+  align-items: center;
+  background-color: var(--secondary);
+  margin: 0;
+  padding: 0;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.home-page .main-sect .chat-window .message-bubble-header h2 {
+  margin: 5px;
+}
+.home-page .main-sect .chat-window .message-bubble-header h5 {
+  margin: 5px;
+}
+.home-page .main-sect .chat-window .message-bubble p {
+  margin: 10px;
 }
 .home-page .main-sect .chat-bar {
   height: 60px;
@@ -411,4 +445,12 @@ button {
 
 .notification-item:hover {
   box-shadow: var(--box-inner);
+}
+
+.selected {
+  background-color: var(--secondary);
+  border-radius: 6px;
+}
+.selected .friend-item-image {
+  background-color: var(--tertiary);
 }/*# sourceMappingURL=styles.css.map */

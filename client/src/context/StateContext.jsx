@@ -19,6 +19,10 @@ const StateContext = ({ children }) => {
   const [hasNewMessages, setHasNewMessages] = useState(false); //S:FriendPanel.jsx U: Notifications.jsx
   const [isFriendOpen, setIsFriendOpen] = useState(false); //S:Notifications.jsx U:Notifications.jsx
   const [isMessageOpen, setIsMessageOpen] = useState(false); //S:Notifications.jsx U:Notifications.jsx
+  const [showNotifications, setShowNotifications] = useState(false); //S:FriendPanel.jsx U:Home.jsx
+  const [currentChat, setCurrentChat] = useState(null); //S:FriendPanel.jsx U:FriendPanel.jsx, ChatBar.jsx
+  const [chatHistoryCache, setChatHistoryCache] = useState(() => new Map()); //S: U:
+  const [chatIsLoaded, setChatIsLoaded] = useState(false);
 
   const values = {
     isLoaded,
@@ -47,6 +51,14 @@ const StateContext = ({ children }) => {
     setIsFriendOpen,
     isMessageOpen,
     setIsMessageOpen,
+    showNotifications,
+    setShowNotifications,
+    chatHistoryCache,
+    setChatHistoryCache,
+    currentChat,
+    setCurrentChat,
+    chatIsLoaded,
+    setChatIsLoaded,
   };
 
   return <GlobalStateContext value={values}>{children}</GlobalStateContext>;

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchNotifications } from "../../scripts/notificationScript.js";
 import { toastMessage } from "../../scripts/toastScript.js";
 import { fetchFriendsList } from "../../scripts/friendRequestScript.js";
+import { fetchHistory } from "../../scripts/historyScript.js";
 
 const FriendPanel = () => {
   const { friendList, authToken, user, setFriendList } = useGlobalAuth();
@@ -18,11 +19,17 @@ const FriendPanel = () => {
     setNotificationStatus,
     setHasFriendRequests,
     setHasNewMessages,
+    setChatHistoryCache,
+    currentChat,
+    setCurrentChat,
+    setChatIsLoaded,
+    showNotifications,
+    setShowNotifications,
   } = useGlobalState();
   const navigate = useNavigate();
 
   const handleNotificationScreen = () => {
-    navigate("/notifications");
+    setShowNotifications(true);
   };
 
   const loadNotifications = async () => {
@@ -54,9 +61,50 @@ const FriendPanel = () => {
     setFriendList(newList);
   };
 
+  const loadChatHistory = async (friendId) => {
+    const history = await fetchHistory(user.user_id, friendId, authToken);
+    if (history?.error) {
+      switch (history?.status) {
+        case 500:
+          toastMessage("Unexpected error, please try again");
+          break;
+      }
+    }
+
+    setChatHistoryCache((prev) => {
+      const next = new Map(prev);
+      next.set(friendId, history);
+      return next;
+    });
+  };
+
   useEffect(() => {
-    loadNotifications();
-  }, []);
+    let cancelled = false;
+
+    const loading = async () => {
+      try {
+        await loadNotifications();
+
+        if (friendList.length > 0) {
+          const initial = friendList[0];
+          setCurrentChat(initial);
+          await loadChatHistory(initial.friendId);
+        }
+      } catch (error) {
+        console.log("loading error", error);
+      } finally {
+        if (!cancelled) {
+          setChatIsLoaded(true);
+        }
+      }
+    };
+
+    loading();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [friendList]);
 
   useEffect(() => {
     const acceptedFriendRequest = (data) => {
@@ -101,12 +149,17 @@ const FriendPanel = () => {
       </div>
       <ul className="friend-panel-list">
         {friendList.map((friend) => {
-          const { username, friendId } = friend;
+          const { friendId } = friend;
           return (
             <FriendItem
               className="friend-panel-list-item"
               key={friendId}
-              user={username}
+              isSelected={currentChat === friend}
+              onSelect={() => {
+                setCurrentChat(friend);
+                loadChatHistory(friendId);
+              }}
+              {...friend}
             />
           );
         })}

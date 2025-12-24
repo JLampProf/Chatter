@@ -8,14 +8,11 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthContext from "./context/AuthContext.jsx";
-import StateContext from "./context/StateContext.jsx";
-import Notifications from "./pages/Notifications.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/about", element: <About /> },
   // { path: "/home", element: <Home /> },
-  { path: "/notifications", element: <Notifications /> },
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
   { path: "*", element: <NotFound /> },
@@ -24,9 +21,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthContext>
-      <StateContext>
-        <RouterProvider router={router} />
-      </StateContext>
+      <RouterProvider router={router} />
     </AuthContext>
   </StrictMode>
 );

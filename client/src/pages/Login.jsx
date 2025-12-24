@@ -9,7 +9,6 @@
 import { useState } from "react";
 import { handleLogin } from "../scripts/loginScript.js";
 import { useGlobalAuth } from "../context/AuthContext.jsx";
-import { useGlobalState } from "../context/StateContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { toastMessage } from "../scripts/toastScript.js";
@@ -21,7 +20,6 @@ const Login = () => {
   const { setUser, setAuthToken, setIsLoggedIn, setFriendList } =
     useGlobalAuth();
   const navigate = useNavigate();
-  const { setFriendRequestList, setNewMessageList } = useGlobalState();
 
   /**
    * - handleSubmit(e)

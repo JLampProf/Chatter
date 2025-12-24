@@ -20,6 +20,8 @@ import { friendsRouter } from "./routes/api/friends.js";
 import { friendRequestRouter } from "./routes/api/friendRequest.js";
 import { logoutRouter } from "./routes/api/logout.js";
 import { notificationRouter } from "./routes/api/notifications.js";
+import { historyRoute } from "./routes/api/history.js";
+import { chatRoute } from "./routes/api/chat.js";
 
 const app = express();
 const server = createServer(app);
@@ -45,13 +47,14 @@ app.use("/api/search", verifyToken, searchRouter);
 app.use("/api/friends", verifyToken, friendsRouter);
 app.use("/api/friendRequest", verifyToken, friendRequestRouter);
 app.use("/api/notifications", verifyToken, notificationRouter);
+app.use("/api/history", verifyToken, historyRoute);
+app.use("/api/chat", verifyToken, chatRoute);
 app.use("/api/logout", verifyToken, logoutRouter);
 
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
   socket.on("joinRoom", (roomId) => {
     socket.join(roomId);
-    console.log(`${roomId} joined the room`);
   });
 
   socket.on("sendFriendRequest", ({ roomId }) => {
@@ -66,6 +69,10 @@ io.on("connection", (socket) => {
       "acceptedFriendRequest",
       "Friend request was accepted! Say Hi, to your new friend!"
     );
+  });
+
+  socket.on("sendMessage", ({ messageObject }) => {
+    io.to(messageObject.roomId).emit("receiveMessage", { messageObject });
   });
 
   socket.on("disconnect", () => {

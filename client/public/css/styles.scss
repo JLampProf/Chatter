@@ -263,6 +263,46 @@ button {
       flex: 1;
       z-index: 0;
       box-shadow: var(--box-inner);
+      background-color: var(--tertiary);
+      margin: 10px;
+      border-radius: 6px;
+      overflow: scroll;
+      scrollbar-width: none;
+
+      ul {
+        padding: 0;
+      }
+
+      .message-bubble {
+        border-radius: 8px;
+        margin: 20px;
+        padding: 1px;
+        background-color: var(--background);
+        list-style: none;
+        font-family: var(--font-secondary);
+
+        &-header {
+          display: flex;
+          align-items: center;
+          background-color: var(--secondary);
+          margin: 0;
+          padding: 0;
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
+
+          h2 {
+            margin: 5px;
+          }
+
+          h5 {
+            margin: 5px;
+          }
+        }
+
+        p {
+          margin: 10px;
+        }
+      }
     }
 
     .chat-bar {
@@ -465,4 +505,13 @@ button {
 
 .notification-item:hover {
   box-shadow: var(--box-inner);
+}
+
+.selected {
+  background-color: var(--secondary);
+  border-radius: 6px;
+
+  .friend-item-image {
+    background-color: var(--tertiary);
+  }
 }

@@ -10,23 +10,33 @@ export const intercept = axios.create({
 intercept.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error?.config?._retry) return Promise.reject(error);
-    if (error.response.status === HttpStatusCode.Forbidden) {
+    const originalRequest = error.config;
+
+    // Prevent infinite retry loops
+    if (originalRequest._retry) {
+      return Promise.reject(error);
+    }
+
+    // Handle both 401 and 403 as token-related errors
+    if (
+      error.response?.status === HttpStatusCode.Unauthorized ||
+      error.response?.status === HttpStatusCode.Forbidden
+    ) {
+      originalRequest._retry = true;
+
       try {
-        const newToken = await axios.post(`${BACK_URL}/api/refresh`, {
-          withCredentials: true,
-        });
+        const newToken = await intercept.post("api/refresh");
         const accessToken = newToken.data.accessToken;
-        error.config.headers["Authorization"] = `Bearer ${accessToken}`;
-        error.config._retry = true;
-        return intercept(error.config);
-      } catch (error) {
-        if (error?.response?.status === 400) {
-          //At this point, alert user of fraudulent activity through email (Not going to be a feature)
-          return { error: true, status: 400 }; //TODO: Revisit
-        }
-        console.log("Unable to refresh", error);
-        return Promise.reject(error);
+
+        // Ensure headers object exists
+        originalRequest.headers = originalRequest.headers || {};
+        originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+
+        return intercept(originalRequest);
+      } catch (refreshError) {
+        // If refresh fails, reject with the original error
+        // Don't return objects, let axios handle the error properly
+        return Promise.reject(refreshError);
       }
     }
 

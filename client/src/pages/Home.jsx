@@ -4,10 +4,23 @@ import SearchWindow from "../components/home/SearchWindow.jsx";
 import ChatWindow from "../components/home/ChatWindow.jsx";
 import ChatBar from "../components/home/ChatBar.jsx";
 import LoadingBar from "../components/home/LoadingBar.jsx";
+import Notifications from "./Notifications.jsx";
 import { useGlobalState } from "../context/StateContext.jsx";
+import { socket } from "../scripts/socket.js";
+import { useEffect } from "react";
 
 const Home = () => {
-  const { isLoaded, isSearching } = useGlobalState();
+  const { isLoaded, isSearching, showNotifications } = useGlobalState();
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to server", socket.id);
+    });
+
+    return () => {
+      socket.off("connect");
+    };
+  }, []);
 
   return (
     <>
@@ -27,6 +40,7 @@ const Home = () => {
               </>
             )}
           </div>
+          {showNotifications && <Notifications />}
         </section>
       )}
     </>

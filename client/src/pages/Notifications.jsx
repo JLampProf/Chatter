@@ -1,6 +1,5 @@
 import { FaAngleDown } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import FriendRequestNotificationItem from "../components/home/FriendRequestNotificationItem.jsx";
 import NewMessageNotificationItem from "../components/home/NewMessageNotificationItem.jsx";
@@ -8,7 +7,6 @@ import { useGlobalState } from "../context/StateContext.jsx";
 import { ToastContainer } from "react-toastify";
 
 const Notifications = () => {
-  const navigate = useNavigate();
   const [isFriendOpen, setIsFriendOpen] = useState(false);
   const [isMessageOpen, setIsMessageOpen] = useState(false);
   const {
@@ -17,6 +15,7 @@ const Notifications = () => {
     hasFriendRequests,
     hasNewMessages,
     setNotificationStatus,
+    setShowNotifications,
   } = useGlobalState();
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const Notifications = () => {
         <ToastContainer />
         <FaXmark
           onClick={() => {
-            navigate("/");
+            setShowNotifications(false);
           }}
           className="notifications-bar-close"
         />

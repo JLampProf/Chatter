@@ -17,12 +17,14 @@ export const fetchNotifications = async (userId, accessToken) => {
   }
 };
 
-export const sendRemove = async () => {
-  try {
-    await intercept.delete("api/notifications");
+// export const sendRemove = async (accessToken) => {
+//   try {
+//     await intercept.delete("api/notifications", {
+//       headers: { Authorization: `Bearer ${accessToken}` },
+//     });
 
-    return;
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     return;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

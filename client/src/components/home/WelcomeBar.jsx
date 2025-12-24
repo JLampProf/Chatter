@@ -63,20 +63,7 @@ const WelcomeBar = () => {
   const logout = async () => {
     setUser({});
     setIsLoggedIn(false);
-    setIsSearching(false);
-    setFriendList([]);
     socket.disconnect();
-    setIsLoaded(false);
-    setSearchedUser({});
-    setAlreadyFriends(false);
-    setIsFriendOpen(false);
-    setIsMessageOpen(false);
-    setNotificationStatus(false);
-    setSearchValue("");
-    setFriendRequestList([]);
-    setNewMessageList([]);
-    setHasFriendRequests(false);
-    setHasNewMessages(false);
     try {
       await handleLogout(authToken);
     } catch (error) {

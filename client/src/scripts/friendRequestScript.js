@@ -1,6 +1,7 @@
 import { intercept } from "./axiosScript.js";
 
 export const sendAcceptFriend = async (currentUserId, friendId, authToken) => {
+  console.log("auth:", authToken);
   try {
     await intercept.post(
       "api/friendRequest",

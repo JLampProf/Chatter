@@ -21,7 +21,6 @@ export const sendFriendRequest = async (
 
     return;
   } catch (error) {
-    console.log("friendScriptSaveFriend:", error);
     if (error?.response) {
       if (error?.response?.status === 500) {
         return { error: true, status: 500 };

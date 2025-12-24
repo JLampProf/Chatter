@@ -5,7 +5,7 @@ const LoadingBar = () => {
 
   setTimeout(() => {
     setIsLoaded(true);
-  }, 4000);
+  }, 2000);
 
   return (
     <section className="loading-icon">

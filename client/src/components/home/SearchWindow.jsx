@@ -55,7 +55,10 @@ const SearchWindow = () => {
   return (
     <>
       <div className="searched">
-        <FriendItem key={searchedUser.userId} user={searchedUser.username} />
+        <FriendItem
+          key={searchedUser.userID}
+          username={searchedUser.username}
+        />
         <button onClick={handleAdd} type="button" disabled={alreadyFriends}>
           Add Friend
         </button>
