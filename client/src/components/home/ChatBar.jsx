@@ -19,6 +19,7 @@ const ChatBar = () => {
     receiverId: 0,
     sender_id: 0,
     roomId: null,
+    fromUser: "",
   };
 
   const handleChat = async (e) => {
@@ -32,6 +33,7 @@ const ChatBar = () => {
       receiverId: currentChat.friendId,
       sender_id: user.user_id,
       roomId: currentChat.room_id,
+      fromUser: user.username,
     };
 
     const saved = await saveMessage(messageObject, authToken);

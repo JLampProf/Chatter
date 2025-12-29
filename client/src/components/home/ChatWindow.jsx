@@ -3,6 +3,7 @@ import { socket } from "../../scripts/socket.js";
 import { useGlobalState } from "../../context/StateContext.jsx";
 import MessageBubble from "./MessageBubble.jsx";
 import LoadingBar from "./LoadingBar.jsx";
+import { toastMessage } from "../../scripts/toastScript.js";
 
 const ChatWindow = () => {
   const { chatHistoryCache, currentChat, chatIsLoaded, setChatHistoryCache } =
@@ -17,7 +18,6 @@ const ChatWindow = () => {
 
   useEffect(() => {
     const receiveMessage = ({ messageObject }) => {
-      console.log("msg:", messageObject);
       // Only add message to cache if it belongs to the current chat
       if (
         messageObject.sender_id === currentChat?.friendId ||
@@ -29,6 +29,12 @@ const ChatWindow = () => {
           next.set(currentChat?.friendId, [...prevMessages, messageObject]);
           return next;
         });
+        toastMessage(
+          `${messageObject.fromUser} said: ${messageObject.message.slice(
+            0,
+            30
+          )}...`
+        );
       }
     };
 
