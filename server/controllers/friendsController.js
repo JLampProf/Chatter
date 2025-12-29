@@ -14,3 +14,19 @@ export const saveFriendRequest = async (req, res) => {
     res.sendStatus(500);
   }
 };
+
+// Remove friend for both users
+export const removeFriend = async (req, res) => {
+  const { userId, friendId } = req.body;
+  try {
+    // Remove both directions
+    await pool.query(
+      "DELETE FROM friend_list WHERE (user_id = ? AND friend_id = ?) OR (user_id = ? AND friend_id = ?)",
+      [userId, friendId, friendId, userId]
+    );
+    res.sendStatus(200);
+  } catch (error) {
+    console.log("removeFriendError:", error);
+    res.sendStatus(500);
+  }
+};

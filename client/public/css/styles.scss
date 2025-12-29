@@ -43,6 +43,12 @@ button {
   min-height: 100vh;
 }
 
+/* If a page only provides a navbar and a single main (.basic-page),
+   make that main span the remaining grid rows so it gets the 1fr space. */
+.app-layout > .basic-page:nth-child(2) {
+  grid-row: 2 / span 2;
+}
+
 .nav-selected {
   background-color: var(--selected);
 }
@@ -94,20 +100,45 @@ button {
   // align-items: center;
   box-shadow: var(--box-outer);
   padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  box-shadow: var(--box-inner);
+  background-color: var(--background);
+  border-radius: 6px;
+  font-family: var(--font-secondary);
+  font-size: 1.2rem;
+  height: calc(100% - 40px);
+}
 
-  &-left {
+.basic-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  &-container {
     padding: 15px;
-    box-shadow: var(--box-inner);
-    background-color: var(--background);
-    border-radius: 6px;
-    font-family: var(--font-secondary);
-    font-size: 1.2rem;
-    height: calc(100% - 40px);
+    background-color: var(--secondary);
+
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    &-content {
+      padding: 15px;
+      box-shadow: var(--box-inner);
+      background-color: var(--background);
+      border-radius: 6px;
+      font-family: var(--font-secondary);
+      font-size: 1rem;
+      flex: 1;
+      min-height: 0;
+    }
   }
 
-  &-right {
-    height: 400px;
-    width: 400px;
+  h1 {
+    align-self: center;
   }
 }
 

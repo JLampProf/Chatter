@@ -28,3 +28,16 @@ export const sendFriendRequest = async (
     }
   }
 };
+
+// Remove friend API
+export const removeFriend = async (userId, friendId, accessToken) => {
+  try {
+    await intercept.delete("api/friends/remove", {
+      data: { userId, friendId },
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    return { success: true };
+  } catch (error) {
+    return { error: true, status: error?.response?.status };
+  }
+};

@@ -24,8 +24,8 @@ const App = () => {
         <div className="app-layout">
           <Navbar />
           <Banner />
-          <section className="main-page">
-            <article className="main-page-left">
+          <section className="basic-page-container">
+            <article className="basic-page-container-content">
               <h1>Features:</h1>
               <List array={features} />
             </article>

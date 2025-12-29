@@ -1,5 +1,8 @@
 import { useGlobalAuth } from "../../context/AuthContext.jsx";
 import FriendItem from "../../components/home/FriendItem.jsx";
+import RemoveFriendModal from "./RemoveFriendModal.jsx";
+import "../../../public/css/RemoveFriendModal.css";
+import { removeFriend as removeFriendAPI } from "../../scripts/friendScript.js";
 import { socket } from "../../scripts/socket.js";
 import { useEffect, useState } from "react";
 import { useGlobalState } from "../../context/StateContext.jsx";
@@ -11,6 +14,8 @@ import { fetchHistory } from "../../scripts/historyScript.js";
 
 const FriendPanel = () => {
   const { friendList, authToken, user, setFriendList } = useGlobalAuth();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [pendingRemove, setPendingRemove] = useState(null);
   const [notificationAmount, setNotificationAmount] = useState(0);
   const {
     notificationStatus,
@@ -132,6 +137,63 @@ const FriendPanel = () => {
     };
   }, []);
 
+  // Remove friend handler
+  const handleRemoveFriend = async (friend) => {
+    setPendingRemove(friend);
+    setModalOpen(true);
+  };
+
+  const confirmRemoveFriend = async () => {
+    if (!pendingRemove) return;
+    const { friendId } = pendingRemove;
+    setModalOpen(false);
+    setPendingRemove(null);
+    // API call
+    const res = await removeFriendAPI(user.user_id, friendId, authToken);
+    if (res.success) {
+      // Real-time update via socket
+      socket.emit("removeFriend", { userId: user.user_id, friendId });
+      // Remove from UI
+      const updatedList = friendList.filter((f) => f.friendId !== friendId);
+      setFriendList(updatedList);
+      // If current chat is deleted, select top chat
+      if (currentChat && currentChat.friendId === friendId) {
+        setCurrentChat(updatedList[0] || null);
+      }
+      // Reset alreadyFriends so Add Friend button is enabled
+      if (typeof window !== "undefined" && window.dispatchEvent) {
+        // Custom event to trigger state update in SearchWindow if needed
+        window.dispatchEvent(new Event("friendRemoved"));
+      }
+      if (typeof setAlreadyFriends === "function") {
+        setAlreadyFriends(false);
+      }
+      toastMessage("Friend removed successfully.");
+    } else {
+      toastMessage("Failed to remove friend.");
+    }
+  };
+
+  // Listen for real-time removal
+  useEffect(() => {
+    const onFriendRemoved = ({ userId, friendId }) => {
+      if (user.user_id === userId || user.user_id === friendId) {
+        const updatedList = friendList.filter(
+          (f) => f.friendId !== (user.user_id === userId ? friendId : userId)
+        );
+        setFriendList(updatedList);
+        if (
+          currentChat &&
+          (currentChat.friendId === friendId || currentChat.friendId === userId)
+        ) {
+          setCurrentChat(updatedList[0] || null);
+        }
+      }
+    };
+    socket.on("friendRemoved", onFriendRemoved);
+    return () => socket.off("friendRemoved", onFriendRemoved);
+  }, [friendList, currentChat, user.user_id]);
+
   return (
     <section onLoad={loadNotifications} className="friend-panel">
       <div className="friend-panel-header">
@@ -159,11 +221,19 @@ const FriendPanel = () => {
                 setCurrentChat(friend);
                 loadChatHistory(friendId);
               }}
+              onDelete={() => handleRemoveFriend(friend)}
+              showDelete={true}
               {...friend}
             />
           );
         })}
       </ul>
+      <RemoveFriendModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={confirmRemoveFriend}
+        friendName={pendingRemove?.username || "this user"}
+      />
       <div className="settings-bar">
         <h2>Settings</h2>
         <div className="settings-bar-icon">

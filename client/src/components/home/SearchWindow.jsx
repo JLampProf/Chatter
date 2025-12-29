@@ -5,10 +5,22 @@ import { socket } from "../../scripts/socket.js";
 import { fetchRoomId } from "../../scripts/searchScript.js";
 import { sendFriendRequest } from "../../scripts/friendScript.js";
 import { toastMessage } from "../../scripts/toastScript.js";
+import { useEffect } from "react";
 
 const SearchWindow = () => {
-  const { searchedUser, setIsSearching, setSearchedUser, alreadyFriends } =
-    useGlobalState();
+  const {
+    searchedUser,
+    setIsSearching,
+    setSearchedUser,
+    alreadyFriends,
+    setAlreadyFriends,
+  } = useGlobalState();
+  // Listen for friendRemoved event to re-enable Add Friend button
+  useEffect(() => {
+    const handler = () => setAlreadyFriends(false);
+    window.addEventListener("friendRemoved", handler);
+    return () => window.removeEventListener("friendRemoved", handler);
+  }, [setAlreadyFriends]);
   const { authToken, user } = useGlobalAuth();
 
   const handleAdd = async () => {

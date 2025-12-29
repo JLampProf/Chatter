@@ -95,7 +95,7 @@ const Register = () => {
           <button type="submit">Sign Up</button>
         </div>
       </form>
-      <ToastContainer autoClose={2000} />
+      <ToastContainer className="toaster" autoClose={2000} />
     </section>
   );
 };

@@ -66,7 +66,6 @@ const Login = () => {
       setIsLoggedIn(true);
       socket.connect();
       socket.emit("joinRoom", response.userData.room_id);
-      console.log("Joined room:", response.userData.room_id);
       navigate("/");
     } catch (error) {
       toastMessage("Unexpected error, please try again");
@@ -116,7 +115,7 @@ const Login = () => {
           <button type="submit">Login</button>
         </div>
       </form>
-      <ToastContainer autoClose={2000} />
+      <ToastContainer className="toaster" autoClose={2000} />
     </section>
   );
 };

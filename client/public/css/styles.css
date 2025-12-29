@@ -43,6 +43,12 @@ button {
   min-height: 100vh;
 }
 
+/* If a page only provides a navbar and a single main (.basic-page),
+   make that main span the remaining grid rows so it gets the 1fr space. */
+.app-layout > .basic-page:nth-child(2) {
+  grid-row: 2 / span 2;
+}
+
 .nav-selected {
   background-color: var(--selected);
 }
@@ -85,9 +91,10 @@ button {
   background-color: var(--tertiary);
   box-shadow: var(--box-outer);
   padding: 20px;
-}
-.main-page-left {
-  padding: 15px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   box-shadow: var(--box-inner);
   background-color: var(--background);
   border-radius: 6px;
@@ -95,9 +102,31 @@ button {
   font-size: 1.2rem;
   height: calc(100% - 40px);
 }
-.main-page-right {
-  height: 400px;
-  width: 400px;
+
+.basic-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.basic-page-container {
+  padding: 15px;
+  background-color: var(--secondary);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.basic-page-container-content {
+  padding: 15px;
+  box-shadow: var(--box-inner);
+  background-color: var(--background);
+  border-radius: 6px;
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  flex: 1;
+  min-height: 0;
+}
+.basic-page h1 {
+  align-self: center;
 }
 
 .login-page {
@@ -453,4 +482,43 @@ button {
 }
 .selected .friend-item-image {
   background-color: var(--tertiary);
-}/*# sourceMappingURL=styles.css.map */
+} /*# sourceMappingURL=styles.css.map */
+
+/* Custom react-toastify overrides to match app theme */
+.toaster,
+.toaster .Toastify__toast-container {
+  font-family: var(--font-secondary);
+}
+.toaster .Toastify__toast {
+  background-color: var(--tertiary) !important;
+  color: var(--primary) !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  /* box-shadow: var(--box-inner) !important; */
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  min-width: 260px !important;
+}
+.toaster .Toastify__toast-body {
+  font-family: var(--font-secondary) !important;
+  font-size: 0.95rem !important;
+}
+.toaster .Toastify__close-button {
+  color: var(--primary) !important;
+  opacity: 0.8 !important;
+}
+.toaster .Toastify__toast--success {
+  border-left: 4px solid #07bc0c !important;
+}
+.toaster .Toastify__toast--error {
+  border-left: 4px solid hsl(6, 78%, 57%) !important;
+}
+.toaster .Toastify__toast--info {
+  border-left: 4px solid #3498db !important;
+}
+.toaster .Toastify__progress-bar {
+  background: linear-gradient(
+    90deg,
+    var(--selected),
+    var(--secondary)
+  ) !important;
+}

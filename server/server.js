@@ -78,6 +78,11 @@ io.on("connection", (socket) => {
     io.to(messageObject.roomId).emit("receiveMessage", { messageObject });
   });
 
+  socket.on("removeFriend", ({ userId, friendId }) => {
+    // Notify both users in real time
+    io.emit("friendRemoved", { userId, friendId });
+  });
+
   socket.on("disconnect", () => {
     console.log(`${socket.id} disconnected.`);
   });

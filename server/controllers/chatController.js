@@ -12,7 +12,7 @@ export const saveMessageHandler = async (req, res) => {
 
     await pool.query(
       "INSERT INTO notifications (notification_type, content, to_user_id, from_user_id) VALUES (?, ?, ?, ?)",
-      ["mew_message", message, receiverId, sender_id]
+      ["new_message", message, receiverId, sender_id]
     );
 
     res.sendStatus(200);
