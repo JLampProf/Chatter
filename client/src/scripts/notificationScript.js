@@ -17,14 +17,19 @@ export const fetchNotifications = async (userId, accessToken) => {
   }
 };
 
-// export const sendRemove = async (accessToken) => {
-//   try {
-//     await intercept.delete("api/notifications", {
-//       headers: { Authorization: `Bearer ${accessToken}` },
-//     });
+export const markAllNewMessagesAsRead = async (userId, accessToken) => {
+  try {
+    const response = await intercept.post(
+      "api/notifications/mark-all-read",
+      { userId },
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
 
-//     return;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+    return response.data;
+  } catch (error) {
+    console.log("markAllNewMessagesAsRead:", error);
+    throw new Error("Failed to mark notifications as read");
+  }
+};

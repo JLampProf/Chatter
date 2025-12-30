@@ -23,3 +23,21 @@ export const notificationsHandler = async (req, res) => {
     throw new Error("Database Error");
   }
 };
+
+export const markAllNewMessagesReadHandler = async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+    await pool.query(
+      "DELETE FROM notifications WHERE to_user_id = ? AND notification_type = 'new_message'",
+      [userId]
+    );
+
+    res
+      .status(200)
+      .json({ message: "All new message notifications marked as read" });
+  } catch (error) {
+    console.log("markAllNewMessagesReadHandler:", error);
+    res.status(500).json({ error: "Failed to mark notifications as read" });
+  }
+};

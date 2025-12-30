@@ -435,6 +435,28 @@ button {
   justify-content: center;
   align-items: center;
 }
+.notifications-mark-all-read-btn {
+  height: 25px;
+  padding: 0 10px;
+  border-radius: 6px;
+  border: 0;
+  box-shadow: var(--box-outer);
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: var(--secondary);
+  color: var(--primary);
+  transition: background-color 0.2s ease;
+}
+.notifications-mark-all-read-btn:hover:not(:disabled) {
+  background-color: #6d6080;
+}
+.notifications-mark-all-read-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 .notifications-main .dropdown {
   border-radius: 6px;
   background-color: var(--tertiary);

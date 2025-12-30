@@ -4,11 +4,15 @@ import { useState, useEffect } from "react";
 import FriendRequestNotificationItem from "../components/home/FriendRequestNotificationItem.jsx";
 import NewMessageNotificationItem from "../components/home/NewMessageNotificationItem.jsx";
 import { useGlobalState } from "../context/StateContext.jsx";
+import { useGlobalAuth } from "../context/AuthContext.jsx";
+import { markAllNewMessagesAsRead } from "../scripts/notificationScript.js";
+import { toast } from "react-toastify";
 // import { ToastContainer } from "react-toastify";
 
 const Notifications = () => {
   const [isFriendOpen, setIsFriendOpen] = useState(false);
   const [isMessageOpen, setIsMessageOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     friendRequestList,
     newMessageList,
@@ -16,7 +20,22 @@ const Notifications = () => {
     hasNewMessages,
     setNotificationStatus,
     setShowNotifications,
+    setNewMessageList,
   } = useGlobalState();
+  const { userId, accessToken } = useGlobalAuth();
+
+  const handleMarkAllMessagesAsRead = async () => {
+    try {
+      setIsLoading(true);
+      await markAllNewMessagesAsRead(userId, accessToken);
+      setNewMessageList([]);
+      toast.success("All new messages marked as read");
+    } catch (error) {
+      toast.error("Failed to mark messages as read");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (hasFriendRequests) setIsFriendOpen(true);
@@ -63,12 +82,23 @@ const Notifications = () => {
 
       <div className="notifications-main-headings">
         <h2 className="notifications-main-headings-heading">New Messages</h2>
-        <button
-          onClick={() => setIsMessageOpen((prev) => !prev)}
-          className="notifications-dropdown-button"
-        >
-          <FaAngleDown />
-        </button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          {newMessageList.length > 0 && (
+            <button
+              onClick={handleMarkAllMessagesAsRead}
+              className="notifications-mark-all-read-btn"
+              disabled={isLoading}
+            >
+              {isLoading ? "Marking..." : "Mark All as Read"}
+            </button>
+          )}
+          <button
+            onClick={() => setIsMessageOpen((prev) => !prev)}
+            className="notifications-dropdown-button"
+          >
+            <FaAngleDown />
+          </button>
+        </div>
       </div>
       <div
         className={`dropdown ${isMessageOpen ? "open" : ""}`}
