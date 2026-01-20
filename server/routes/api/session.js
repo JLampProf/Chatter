@@ -1,5 +1,3 @@
-sessionRouter.get("/", getSession); // Get current user session
-
 /**
  * session.js
  *

@@ -4,7 +4,6 @@
  * - Handles chat history retrieval and related logic.
  */
 import { pool } from "./databaseController.js";
-import { pool } from "./databaseController.js";
 
 export const historyHandler = async (req, res) => {
   /**
