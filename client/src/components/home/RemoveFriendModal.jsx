@@ -1,5 +1,16 @@
+/**
+ * RemoveFriendModal.jsx
+ *
+ * - Modal for confirming friend removal
+ */
+
 import React from "react";
 
+/**
+ * - RemoveFriendModal({ open, onClose, onConfirm, friendName })
+ *
+ * - Renders modal for removing a friend
+ */
 const RemoveFriendModal = ({ open, onClose, onConfirm, friendName }) => {
   if (!open) return null;
   return (

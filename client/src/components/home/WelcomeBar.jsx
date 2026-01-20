@@ -1,3 +1,10 @@
+/**
+ * WelcomeBar.jsx
+ *
+ * - Displays user greeting and search bar
+ * - Handles friend search and logout
+ */
+
 import { useGlobalAuth } from "../../context/AuthContext.jsx";
 import { useGlobalState } from "../../context/StateContext.jsx";
 import { searchFriend } from "../../scripts/searchScript.js";
@@ -6,6 +13,11 @@ import { socket } from "../../scripts/socket.js";
 import { useEffect } from "react";
 import { handleLogout } from "../../scripts/logoutScript.js";
 
+/**
+ * - WelcomeBar()
+ *
+ * - Renders the welcome bar and search logic
+ */
 const WelcomeBar = () => {
   const {
     user,

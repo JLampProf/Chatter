@@ -1,3 +1,8 @@
+/**
+ * logoutController.js
+ *
+ * - Handles user logout and session destruction.
+ */
 import { invalidateRefreshToken } from "./refreshController.js";
 import { pool } from "./databaseController.js";
 import jwt from "jsonwebtoken";

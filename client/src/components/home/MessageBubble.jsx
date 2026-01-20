@@ -1,12 +1,24 @@
+/**
+ * MessageBubble.jsx
+ *
+ * - Renders a single chat message bubble
+ * - Formats message time and sender
+ */
+
 import { format } from "date-fns";
 import { useGlobalAuth } from "../../context/AuthContext.jsx";
 
+/**
+ * - MessageBubble({ chat_id, message, message_time, name, sender_id })
+ *
+ * - Renders a chat message with sender and time
+ */
 const MessageBubble = ({ chat_id, message, message_time, name, sender_id }) => {
   const { user } = useGlobalAuth();
 
   const timeFormat = `${format(
     message_time ?? new Date(),
-    "dd/MM/yyyy\tHH:mm"
+    "dd/MM/yyyy\tHH:mm",
   )}`;
 
   return (

@@ -1,6 +1,18 @@
+/**
+ * NavBar.jsx
+ *
+ * - Navigation bar for main site pages
+ * - Handles route selection and navigation
+ */
+
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
+/**
+ * - Navbar()
+ *
+ * - Renders navigation links and manages selected state
+ */
 const Navbar = () => {
   //TODO: Privacy Policy flashes at startup
   const [selected, setSelected] = useState(1);
@@ -8,6 +20,7 @@ const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Update selected nav item based on current route
     const path = location.pathname;
     if (path === "/") setSelected(1);
     else if (path === "/about") setSelected(2);
@@ -21,8 +34,8 @@ const Navbar = () => {
       <ul className="nav-list">
         <li
           onClick={() => {
-            setSelected(1);
-            navigate("/");
+            setSelected(1); // Set nav state to Welcome
+            navigate("/"); // Navigate to Welcome page
           }}
           className={`nav-list-item ${selected === 1 ? "nav-selected" : ""}`}
         >
@@ -30,8 +43,8 @@ const Navbar = () => {
         </li>
         <li
           onClick={() => {
-            setSelected(2);
-            navigate("/about");
+            setSelected(2); // Set nav state to About
+            navigate("/about"); // Navigate to About page
           }}
           className={`nav-list-item ${selected === 2 ? "nav-selected" : ""}`}
         >
@@ -39,8 +52,8 @@ const Navbar = () => {
         </li>
         <li
           onClick={() => {
-            setSelected(3);
-            navigate("/contact");
+            setSelected(3); // Set nav state to Contact
+            navigate("/contact"); // Navigate to Contact page
           }}
           className={`nav-list-item ${selected === 3 ? "nav-selected" : ""}`}
         >
@@ -48,8 +61,8 @@ const Navbar = () => {
         </li>
         <li
           onClick={() => {
-            setSelected(4);
-            navigate("/privacy");
+            setSelected(4); // Set nav state to Privacy
+            navigate("/privacy"); // Navigate to Privacy page
           }}
           className={`nav-list-item ${selected === 4 ? "nav-selected" : ""}`}
         >

@@ -1,3 +1,10 @@
+/**
+ * CookieNoticeModal.jsx
+ *
+ * - Modal to inform users about cookie usage
+ * - Explains authentication cookies and privacy
+ */
+
 const CookieModal = ({ onClose }) => {
   return (
     <div className="cookie-modal-overlay">

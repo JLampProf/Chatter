@@ -1,3 +1,10 @@
+/**
+ * App.jsx
+ *
+ * - Main entry point for the client app
+ * - Handles routing and layout for authenticated and unauthenticated users
+ */
+
 import Navbar from "../components/NavBar.jsx";
 import Banner from "../components/Banner.jsx";
 import List from "../components/List.jsx";
@@ -9,6 +16,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import StateContext from "../context/StateContext.jsx";
 
+/**
+ * - App()
+ *
+ * - Handles main app logic and conditional rendering
+ */
 const App = () => {
   const { isLoggedIn } = useGlobalAuth();
 
@@ -27,6 +39,7 @@ const App = () => {
           <section className="basic-page-container">
             <article className="basic-page-container-content">
               <h1>Features:</h1>
+              {/* Render feature list for unauthenticated users */}
               <List array={features} />
             </article>
           </section>

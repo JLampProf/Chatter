@@ -28,7 +28,7 @@ export const registerHandler = async (req, res) => {
 
     await pool.query(
       "INSERT INTO users (username, password, room_id) VALUES (?, ?, ?)",
-      [trimmedUser, hashedPwd, newId]
+      [trimmedUser, hashedPwd, newId],
     );
 
     await loginHandler(req, res);

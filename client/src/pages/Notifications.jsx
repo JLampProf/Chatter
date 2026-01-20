@@ -1,3 +1,11 @@
+/**
+ * Notifications.jsx
+ *
+ * - Displays friend request and new message notifications
+ * - Allows marking all new messages as read
+ * - Handles notification dropdowns and UI state
+ */
+
 import { FaAngleDown } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { useState, useEffect } from "react";
@@ -7,8 +15,12 @@ import { useGlobalState } from "../context/StateContext.jsx";
 import { useGlobalAuth } from "../context/AuthContext.jsx";
 import { markAllNewMessagesAsRead } from "../scripts/notificationScript.js";
 import { toast } from "react-toastify";
-// import { ToastContainer } from "react-toastify";
 
+/**
+ * - Notifications()
+ *
+ * - Handles notification logic and rendering for friend requests and messages
+ */
 const Notifications = () => {
   const [isFriendOpen, setIsFriendOpen] = useState(false);
   const [isMessageOpen, setIsMessageOpen] = useState(false);
@@ -24,6 +36,12 @@ const Notifications = () => {
   } = useGlobalState();
   const { userId, accessToken } = useGlobalAuth();
 
+  /**
+   * - handleMarkAllMessagesAsRead()
+   *
+   * - Marks all new messages as read for the user
+   * - Updates state and shows toast notifications
+   */
   const handleMarkAllMessagesAsRead = async () => {
     try {
       setIsLoading(true);
@@ -38,16 +56,17 @@ const Notifications = () => {
   };
 
   useEffect(() => {
+    // Open friend requests dropdown if there are pending requests
     if (hasFriendRequests) setIsFriendOpen(true);
+    // Open messages dropdown if there are new messages
     if (hasNewMessages) setIsFriendOpen(true);
-    setNotificationStatus(false);
+    setNotificationStatus(false); // Reset notification status on mount
   }, []);
 
   return (
     <section className="notifications-main">
       <div className="notifications-bar">
         <h1>Notifications</h1>
-        {/* <ToastContainer /> */}
         <FaXmark
           onClick={() => {
             setShowNotifications(false);
@@ -72,6 +91,7 @@ const Notifications = () => {
         <ul className="dropdown-list">
           {friendRequestList.map((item) => {
             const { notification_id } = item;
+            // Render each friend request notification item
             return (
               <FriendRequestNotificationItem key={notification_id} {...item} />
             );
@@ -107,6 +127,7 @@ const Notifications = () => {
         <ul className="dropdown-list">
           {newMessageList.map((item) => {
             const { notification_id } = item;
+            // Render each new message notification item
             return (
               <NewMessageNotificationItem key={notification_id} {...item} />
             );

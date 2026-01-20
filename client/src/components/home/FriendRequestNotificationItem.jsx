@@ -1,3 +1,10 @@
+/**
+ * FriendRequestNotificationItem.jsx
+ *
+ * - Renders a notification for a friend request
+ * - Handles accept and decline actions
+ */
+
 import {
   sendAcceptFriend,
   sendRejectFriend,
@@ -8,6 +15,11 @@ import { useGlobalState } from "../../context/StateContext.jsx";
 import { toastMessage } from "../../scripts/toastScript.js";
 import { socket } from "../../scripts/socket.js";
 
+/**
+ * - FriendRequestNotificationItem({ username, to_user_id, from_user_id, notification_id, content })
+ *
+ * - Renders friend request notification and handles actions
+ */
 const FriendRequestNotificationItem = ({
   username,
   to_user_id,
@@ -23,14 +35,14 @@ const FriendRequestNotificationItem = ({
       const accepted = await sendAcceptFriend(
         to_user_id,
         from_user_id,
-        authToken
+        authToken,
       );
 
       if (accepted?.error) {
         switch (accepted?.status) {
           case 500:
             toastMessage(
-              "A server error occurred, please refresh and try again"
+              "A server error occurred, please refresh and try again",
             );
         }
       }
@@ -57,7 +69,7 @@ const FriendRequestNotificationItem = ({
         switch (rejected?.status) {
           case 500:
             toastMessage(
-              "Could not remove friend request, please try again later."
+              "Could not remove friend request, please try again later.",
             );
         }
       }

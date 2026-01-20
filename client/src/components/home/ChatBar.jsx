@@ -1,9 +1,21 @@
+/**
+ * ChatBar.jsx
+ *
+ * - Input bar for sending chat messages
+ * - Handles message sending and socket emit
+ */
+
 import { useGlobalState } from "../../context/StateContext.jsx";
 import { useGlobalAuth } from "../../context/AuthContext.jsx";
 import { socket } from "../../scripts/socket.js";
 import { saveMessage } from "../../scripts/chatScript.js";
 import { toastMessage } from "../../scripts/toastScript.js";
 
+/**
+ * - ChatBar()
+ *
+ * - Renders the chat input bar and handles message send
+ */
 const ChatBar = () => {
   const {
     chatValue,

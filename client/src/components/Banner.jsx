@@ -1,3 +1,9 @@
+/**
+ * Banner.jsx
+ *
+ * - Displays the site banner image
+ */
+
 const Banner = () => {
   return (
     <div className="banner-container">

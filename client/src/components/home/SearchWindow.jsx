@@ -1,3 +1,10 @@
+/**
+ * SearchWindow.jsx
+ *
+ * - Shows search results for users
+ * - Handles add friend logic
+ */
+
 import { useGlobalState } from "../../context/StateContext.jsx";
 import { useGlobalAuth } from "../../context/AuthContext.jsx";
 import FriendItem from "./FriendItem.jsx";
@@ -7,6 +14,11 @@ import { sendFriendRequest } from "../../scripts/friendScript.js";
 import { toastMessage } from "../../scripts/toastScript.js";
 import { useEffect } from "react";
 
+/**
+ * - SearchWindow()
+ *
+ * - Renders search results and add friend button
+ */
 const SearchWindow = () => {
   const {
     searchedUser,
@@ -29,7 +41,7 @@ const SearchWindow = () => {
       if (userRoomId?.error) {
         if (userRoomId?.status === 400) {
           toastMessage(
-            "Could not complete request, please wait and try again."
+            "Could not complete request, please wait and try again.",
           );
         }
       }
@@ -38,19 +50,19 @@ const SearchWindow = () => {
         user.user_id,
         searchedUser.userID,
         user.roomId,
-        authToken
+        authToken,
       );
 
       if (sendRequest?.error) {
         switch (sendRequest?.status) {
           case 500:
             toastMessage(
-              "Could not send friend request, please wait and try again."
+              "Could not send friend request, please wait and try again.",
             );
             break;
           case 400:
             toastMessage(
-              "Could not complete request, please wait and try again."
+              "Could not complete request, please wait and try again.",
             );
             break;
         }

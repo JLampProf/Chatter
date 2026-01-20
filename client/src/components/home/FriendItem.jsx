@@ -1,7 +1,19 @@
+/**
+ * FriendItem.jsx
+ *
+ * - Renders a single friend in the friend list
+ * - Handles selection and delete button
+ */
+
 import { useGlobalAuth } from "../../context/AuthContext.jsx";
 import { FaTrashCan } from "react-icons/fa6";
 import { useState } from "react";
 
+/**
+ * - FriendItem({ username, friendId, room_id, isSelected, onSelect, onDelete, showDelete })
+ *
+ * - Renders a friend item with optional delete button
+ */
 const FriendItem = ({
   username,
   friendId,
@@ -30,8 +42,8 @@ const FriendItem = ({
         <button
           className="friend-item-delete-btn"
           onClick={(e) => {
-            e.stopPropagation();
-            onDelete && onDelete();
+            e.stopPropagation(); // Prevent parent click event
+            onDelete && onDelete(); // Call delete handler
           }}
           style={{
             position: "absolute",

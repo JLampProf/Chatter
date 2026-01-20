@@ -36,7 +36,7 @@ const Login = () => {
    */
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); //Prevents page reload on form submission
+    e.preventDefault(); // Prevents page reload on form submission
     try {
       const response = await handleLogin(userLoginData);
 
@@ -60,13 +60,13 @@ const Login = () => {
         user_id: response.userData.user_id,
         roomId: response.userData.room_id,
       });
-      setFriendList(response.friendList);
-      setAuthToken(response.accessToken);
-      setUserLoginData({ user: "", pwd: "" });
-      setIsLoggedIn(true);
-      socket.connect();
-      socket.emit("joinRoom", response.userData.room_id);
-      navigate("/");
+      setFriendList(response.friendList); // Store friend list in context
+      setAuthToken(response.accessToken); // Store JWT access token
+      setUserLoginData({ user: "", pwd: "" }); // Reset form fields
+      setIsLoggedIn(true); // Set user as logged in
+      socket.connect(); // Establish socket connection
+      socket.emit("joinRoom", response.userData.room_id); // Join user-specific room
+      navigate("/"); // Redirect to home page
     } catch (error) {
       toastMessage("Unexpected error, please try again");
     }
@@ -80,12 +80,12 @@ const Login = () => {
         <input
           onFocus={() => {
             if (!hintShown) {
-              setHintShown(true);
+              setHintShown(true); // Only show the hint once per session
               toastMessage("Username and Password are case-sensitive");
             }
           }}
           onChange={(e) =>
-            // Collects the data from the input
+            // Update username in state as user types
             setUserLoginData({ ...userLoginData, user: e.target.value })
           }
           id="user"
@@ -99,7 +99,7 @@ const Login = () => {
         </label>
         <input
           onChange={(e) =>
-            // Collects the data from the input
+            // Update password in state as user types
             setUserLoginData({ ...userLoginData, pwd: e.target.value })
           }
           id="pass"

@@ -1,3 +1,10 @@
+/**
+ * FriendPanel.jsx
+ *
+ * - Displays the user's friend list and notifications
+ * - Handles friend removal and notification logic
+ */
+
 import { useGlobalAuth } from "../../context/AuthContext.jsx";
 import FriendItem from "../../components/home/FriendItem.jsx";
 import RemoveFriendModal from "./RemoveFriendModal.jsx";
@@ -12,6 +19,11 @@ import { toastMessage } from "../../scripts/toastScript.js";
 import { fetchFriendsList } from "../../scripts/friendRequestScript.js";
 import { fetchHistory } from "../../scripts/historyScript.js";
 
+/**
+ * - FriendPanel()
+ *
+ * - Renders the friend panel and manages friend/notification state
+ */
 const FriendPanel = () => {
   const { friendList, authToken, user, setFriendList } = useGlobalAuth();
   const [modalOpen, setModalOpen] = useState(false);
@@ -54,7 +66,7 @@ const FriendPanel = () => {
       }
 
       setNotificationAmount(
-        notifications.friendRequests.length + notifications.newMessages.length
+        notifications.friendRequests.length + notifications.newMessages.length,
       );
     } catch (error) {
       console.log("loadNotifications:", error);
@@ -179,7 +191,7 @@ const FriendPanel = () => {
     const onFriendRemoved = ({ userId, friendId }) => {
       if (user.user_id === userId || user.user_id === friendId) {
         const updatedList = friendList.filter(
-          (f) => f.friendId !== (user.user_id === userId ? friendId : userId)
+          (f) => f.friendId !== (user.user_id === userId ? friendId : userId),
         );
         setFriendList(updatedList);
         if (

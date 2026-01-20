@@ -37,7 +37,7 @@ export const loginHandler = async (req, res) => {
 
     const [friendList] = await pool.query(
       "SELECT u.username, u.room_id, u.user_id AS friendId FROM users u JOIN friend_list f ON f.friend_id = u.user_id WHERE f.user_id = ?;",
-      [payload.userId]
+      [payload.userId],
     );
 
     //Generate JWT

@@ -1,3 +1,8 @@
+/**
+ * friendsRequestController.js
+ *
+ * - Handles friend request logic: accepting, rejecting, and refreshing friend lists.
+ */
 import { pool } from "./databaseController.js";
 
 export const acceptFriendRequest = async (req, res) => {
@@ -7,7 +12,7 @@ export const acceptFriendRequest = async (req, res) => {
   try {
     await pool.query(
       "INSERT INTO friend_list (user_id, friend_id) VALUES (?, ?), (?, ?)",
-      [current, friend, friend, current]
+      [current, friend, friend, current],
     );
 
     res.sendStatus(204);
@@ -36,7 +41,7 @@ export const refreshFriendsList = async (req, res) => {
   try {
     const [newList] = await pool.query(
       "SELECT u.username, u.room_id, u.user_id AS friendId FROM users u JOIN friend_list f ON f.friend_id = u.user_id WHERE f.user_id = ?;",
-      [userId]
+      [userId],
     );
 
     res.status(200).json({ newList });

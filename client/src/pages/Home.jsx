@@ -1,3 +1,11 @@
+/**
+ * Home.jsx
+ *
+ * - Main application page after login
+ * - Displays friend panel, chat, search, notifications, and cookie modal
+ * - Handles socket connection and cookie modal logic
+ */
+
 import FriendPanel from "../components/home/FriendPanel.jsx";
 import WelcomeBar from "../components/home/WelcomeBar.jsx";
 import SearchWindow from "../components/home/SearchWindow.jsx";
@@ -10,29 +18,35 @@ import { useGlobalState } from "../context/StateContext.jsx";
 import { socket } from "../scripts/socket.js";
 import { useEffect, useState } from "react";
 
+/**
+ * - Home()
+ *
+ * - Handles main layout and conditional rendering for the home page
+ */
 const Home = () => {
   const { isLoaded, isSearching, showNotifications } = useGlobalState();
   const [showCookieModal, setShowCookieModal] = useState(false);
 
   useEffect(() => {
+    // Listen for socket connection event (for debugging)
     socket.on("connect", () => {
       console.log("Connected to server", socket.id);
     });
 
-    // Check if cookie modal has been shown before
+    // Check if cookie modal has been shown before (persisted in localStorage)
     const cookieModalShown = localStorage.getItem("cookieModalShown");
     if (!cookieModalShown) {
-      setShowCookieModal(true);
+      setShowCookieModal(true); // Show cookie notice if not previously shown
     }
 
     return () => {
-      socket.off("connect");
+      socket.off("connect"); // Clean up event listener on unmount
     };
   }, []);
 
   const handleCloseCookieModal = () => {
-    setShowCookieModal(false);
-    localStorage.setItem("cookieModalShown", "true");
+    setShowCookieModal(false); // Hide cookie modal
+    localStorage.setItem("cookieModalShown", "true"); // Persist that modal was shown
   };
 
   return (

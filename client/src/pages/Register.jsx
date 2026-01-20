@@ -1,3 +1,11 @@
+/**
+ * Register.jsx
+ *
+ * - Collects and sends registration data to the backend
+ * - Stores a successful response in state
+ * - Moves the user to the main application page
+ */
+
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { toastMessage } from "../scripts/toastScript.js";
@@ -13,10 +21,25 @@ const Register = () => {
     useGlobalAuth();
   const navigate = useNavigate();
 
+  /**
+   * - handleRegister(e)
+   *
+   * - Steps:
+   *   - 1: Validate password (no spaces)
+   *   - 2: Send data to backend
+   *   - 3: Store response in state
+   *   - 4: Store accessToken in state
+   *   - 5: Set input fields to empty strings
+   *   - 6: Set user to logged in
+   *   - 7: Navigate to main page, with main app now loaded
+   *
+   *   - Shows a toast if unsuccessful
+   */
   const handleRegister = async (e) => {
     e.preventDefault();
 
     if (userLoginData.pwd.includes(" ")) {
+      // Prevent registration if password contains spaces
       toastMessage("Password cannot contain spaces");
       return;
     }
@@ -40,13 +63,13 @@ const Register = () => {
         user_id: response.userData.user_id,
         roomId: response.userData.room_id,
       });
-      setFriendList(response.friendList);
-      setAuthToken(response.accessToken);
-      setUserLoginData({ user: "", pwd: "" });
-      setIsLoggedIn(true);
-      socket.connect();
-      socket.emit("joinRoom", response.userData.room_id);
-      navigate("/");
+      setFriendList(response.friendList); // Store friend list in context
+      setAuthToken(response.accessToken); // Store JWT access token
+      setUserLoginData({ user: "", pwd: "" }); // Reset form fields
+      setIsLoggedIn(true); // Set user as logged in
+      socket.connect(); // Establish socket connection
+      socket.emit("joinRoom", response.userData.room_id); // Join user-specific room
+      navigate("/"); // Redirect to home page
     } catch (error) {
       toastMessage("An unexpected error occurred, please try again.");
     }

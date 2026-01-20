@@ -14,7 +14,7 @@ export const refreshToken = async (req, res) => {
   try {
     const [refreshTokenDb] = await pool.query(
       "SELECT refresh_token FROM sessions WHERE session_id = ? AND valid = ? AND user_id = ?",
-      [sessionCookie, true, decoded.userId]
+      [sessionCookie, true, decoded.userId],
     );
 
     if (refreshTokenDb.length === 0) {
@@ -68,6 +68,9 @@ export const invalidateRefreshToken = async (sessionId) => {
       false,
       sessionId,
     ]);
+    /**
+     * Issues a new access token using a valid refresh token.
+     */
   } catch (error) {
     throw new Error("Could not Invalidate Token");
   }

@@ -1,5 +1,17 @@
+/**
+ * Privacy.jsx
+ *
+ * - Displays the privacy policy for Chatter
+ * - Outlines data collection, usage, rights, and contact info
+ */
+
 import Navbar from "../components/NavBar.jsx";
 
+/**
+ * - Privacy()
+ *
+ * - Renders the privacy policy content
+ */
 const Privacy = () => {
   return (
     <div className="app-layout">
@@ -20,6 +32,7 @@ const Privacy = () => {
               <h2>Information We Collect</h2>
               <p>We may collect:</p>
               <ul>
+                {/* List of collected data types */}
                 <li>Account details (name)</li>
                 <li>Profile information and preferences</li>
                 <li>Messages and content you provide</li>
