@@ -48,6 +48,7 @@
   cursor: pointer;
   font-size: 16px;
   margin-top: 10px;
+  width: fit-content;
 }
 
 .cookie-modal-button:hover {
