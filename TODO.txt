@@ -1,6 +1,0 @@
-- Last chat sender/receiver on top of the contact list
-- Remove friends
-- fix message notifications
-- Ability to delete messages
-- Close the search feature
-- Make the UI responsice to other devices
