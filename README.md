@@ -33,7 +33,7 @@ Screenshots
 
 1. ![HomePage](Screenshots/HomePage.png)
 
-2. ![SignUpScreen](Screenshots/SignUpScreen,png)
+2. ![SignUpScreen](Screenshots/SignUpScreen.png)
 
 3. ![LoginScreen](Screenshots/LoginScreen.png)
 
