@@ -31,38 +31,55 @@ Features
 
 Screenshots
 
+Home Page
 1. ![HomePage](Screenshots/HomePage.png)
 
+Sign Up Page
 2. ![SignUpScreen](Screenshots/SignUpScreen.png)
 
+Login Page
 3. ![LoginScreen](Screenshots/LoginScreen.png)
 
+Failed To Login
 4. ![LoginFailure](Screenshots/LoginFailure.png)
 
+Taken Username
 5. ![UserNameTaken](Screenshots/UserNameTaken.png)
 
+Cookie Notice
 6. ![CookieNotice](Screenshots/CookieNotice.png)
 
+Fresh Dashboard
 7. ![EmptyDash](Screenshots/EmptyDash.png)
 
+Searching For Users
 8. ![UserSeacrh](Screenshots/UserSearch.png)
 
+Notification
 9. ![Notification](Screenshots/Notification.png)
 
+Chat Notifications
 10. ![ChatNotifications](Screenshots/ChatNotifications.png)
 
+Notifications Screen
 11. ![NotificationsScreen](Screenshots/NotificationsScreen.png)
 
+Friend Panel
 12. ![Friends](Screenshots/Friends.png)
 
+Delete Friend Button
 13. ![DeleteFriendButton](Screenshots/DeleteFriendButton.png)
 
+Received Message Notification
 14. ![MessageNotification](Screenshots/MessageNotification.png)
 
+Active Chat
 15. ![ActiveChat](Screenshots/ActiveChat.png)
 
+Chat History Notification
 16. ![ChatHistoryNotifications](Screenshots/ChatHistoryNotifications.png)
 
+Marked Chats
 17. ![MarkedChat](Screenshots/MarkedChats.png)
 
 What I Learned
