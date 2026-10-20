@@ -33,7 +33,7 @@ Screenshots
 
 1. ![HomePage](Screenshots/HomePage.png)
 
-2. ![SignUpScreen](Screenshots/SignUpPage,png)
+2. ![SignUpScreen](Screenshots/SignUpScreen,png)
 
 3. ![LoginScreen](Screenshots/LoginScreen.png)
 
@@ -61,7 +61,7 @@ Screenshots
 
 15. ![ActiveChat](Screenshots/ActiveChat.png)
 
-16. ![ChatHistoryNotifications](Screenshots/ChatHistoryNotificatinos.png)
+16. ![ChatHistoryNotifications](Screenshots/ChatHistoryNotifications.png)
 
 17. ![MarkedChat](Screenshots/MarkedChats.png)
 
