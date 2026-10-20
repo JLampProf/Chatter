@@ -1,4 +1,4 @@
-# Chatter
+# Chatter (VIEW MASTER BRANCH)
 Chatter is a full-stack, Discord-inspired chat application built as the centrepiece of my software development portfolio. The project was designed to explore real-world full-stack concepts including authentication, REST APIs, relational database design, and real-time communication using WebSockets.
 
 Overview
